@@ -127,7 +127,7 @@ class _TwoMinuteBridgeScreenState extends State<TwoMinuteBridgeScreen>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Không Áp Lực Hoàn Hảo',
+                            'Chỉ cần 2 phút, không áp lực!',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,
@@ -136,7 +136,7 @@ class _TwoMinuteBridgeScreenState extends State<TwoMinuteBridgeScreen>
                           ),
                           SizedBox(height: 3),
                           Text(
-                            'Bạn chỉ cam kết làm đúng 120 giây. Sau 120 giây, bạn hoàn toàn có quyền dừng lại mà không phải cắn rứt.',
+                            'Bạn chỉ cần bắt tay vào làm đúng 120 giây. Hết giờ nếu vẫn thấy mệt, bạn hoàn toàn có thể dừng lại nghỉ mà không cần tự trách mình.',
                             style: TextStyle(
                               color: AppColors.textSecondary,
                               fontSize: 12,
@@ -154,7 +154,7 @@ class _TwoMinuteBridgeScreenState extends State<TwoMinuteBridgeScreen>
               // Task Input (Micro-Action Definition)
               if (!_isRunning && !_isCompleted) ...[
                 const Text(
-                  'Hành động siêu nhỏ bạn sẽ làm ngay bây giờ:',
+                  'Chọn 1 việc siêu nhỏ để làm ngay:',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -163,7 +163,7 @@ class _TwoMinuteBridgeScreenState extends State<TwoMinuteBridgeScreen>
                 ),
                 const SizedBox(height: 8),
                 const Text(
-                  'VD: "Mở tài liệu và viết 1 câu", "Đọc 3 dòng đầu", "Tạo file mới"',
+                  'Ví dụ: "Mở file Word viết 1 câu", "Đọc 3 dòng sách", "Dọn bàn làm việc"',
                   style: TextStyle(
                     color: AppColors.textMuted,
                     fontSize: 12,
@@ -175,7 +175,7 @@ class _TwoMinuteBridgeScreenState extends State<TwoMinuteBridgeScreen>
                   autofocus: true,
                   style: const TextStyle(color: Colors.white, fontSize: 16),
                   decoration: InputDecoration(
-                    hintText: 'Nhập hành động siêu nhỏ...',
+                    hintText: 'Nhập việc bạn định làm...',
                     hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.3)),
                     filled: true,
                     fillColor: const Color(0xFF141724),
@@ -203,7 +203,7 @@ class _TwoMinuteBridgeScreenState extends State<TwoMinuteBridgeScreen>
                     shadowColor: AppColors.cyberIndigo.withValues(alpha: 0.5),
                   ),
                   child: const Text(
-                    'Bắt Đầu 120 Giây Không Áp Lực',
+                    'Bấm Vào Đây & Làm Trong 2 Phút',
                     style: TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
                   ),
                 ),
@@ -299,7 +299,7 @@ class _TwoMinuteBridgeScreenState extends State<TwoMinuteBridgeScreen>
                       ),
                       const SizedBox(height: 24),
                       const Text(
-                        'Bạn Đã Vượt Qua Rào Cản Khó Nhất!',
+                        'Bạn Đã Vượt Qua Bước Khó Nhất Rồi!',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
@@ -311,7 +311,7 @@ class _TwoMinuteBridgeScreenState extends State<TwoMinuteBridgeScreen>
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: Text(
-                          'Bộ não của bạn đã bước vào dòng chảy (Flow State). Bây giờ bạn hoàn toàn tự do lựa chọn:',
+                          'Khởi động xong rồi đấy! Bạn thấy làm việc cũng đâu quá tệ đúng không? Giờ bạn muốn làm tiếp hay dừng lại nghỉ ngơi?',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AppColors.textSecondary,
@@ -332,7 +332,7 @@ class _TwoMinuteBridgeScreenState extends State<TwoMinuteBridgeScreen>
                           ),
                         ),
                         child: const Text(
-                          'Tiếp Tục Làm Việc (Đang Vào Cơn)',
+                          'Đang Vào Cơn Hăng - Làm Tiếp Luôn!',
                           style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
                         ),
                       ),
@@ -340,7 +340,7 @@ class _TwoMinuteBridgeScreenState extends State<TwoMinuteBridgeScreen>
                       TextButton(
                         onPressed: () => Navigator.of(context).maybePop(),
                         child: const Text(
-                          'Nghỉ ngơi có kiểm soát',
+                          'Thôi nghỉ một lát đã',
                           style: TextStyle(color: AppColors.textMuted, fontSize: 13),
                         ),
                       ),

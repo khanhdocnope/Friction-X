@@ -313,7 +313,7 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
 
               // Title & Psychological Cooldown Banner
               const Text(
-                'Dopamine Friction Gate',
+                'Thử Thách Gõ Chữ Nguội Tay',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 26,
@@ -323,7 +323,7 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
               ),
               const SizedBox(height: 6),
               Text(
-                'Gõ chính xác từng từ để vượt qua cổng ma sát. Sai 1 ký tự sẽ reset từ đang gõ. Không cho phép Copy-Paste.',
+                'Tự tay gõ đúng từng từ để mở app. Gõ sai từ nào sẽ bị xóa bắt gõ lại từ đó. Cấm copy-paste.',
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.5),
                   fontSize: 13,
