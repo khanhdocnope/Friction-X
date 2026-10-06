@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/widgets/cyber_radar_widget.dart';
 import '../../target_apps/domain/interception_rule.dart';
 
-class HardBlockScreen extends StatefulWidget {
+class HardBlockScreen extends StatelessWidget {
   final TargetAppRule appRule;
   final VoidCallback onDismiss;
 
@@ -11,41 +12,6 @@ class HardBlockScreen extends StatefulWidget {
     required this.appRule,
     required this.onDismiss,
   });
-
-  @override
-  State<HardBlockScreen> createState() => _HardBlockScreenState();
-}
-
-class _HardBlockScreenState extends State<HardBlockScreen>
-    with TickerProviderStateMixin {
-  late AnimationController _pulseController;
-  late AnimationController _rotateController;
-  late Animation<double> _scaleAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _pulseController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1500),
-    )..repeat(reverse: true);
-
-    _rotateController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 10),
-    )..repeat();
-
-    _scaleAnimation = Tween<double>(begin: 0.94, end: 1.06).animate(
-      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
-    );
-  }
-
-  @override
-  void dispose() {
-    _pulseController.dispose();
-    _rotateController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,14 +38,14 @@ class _HardBlockScreenState extends State<HardBlockScreen>
                     ),
                   ],
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.shield_rounded, color: AppColors.neonCrimson, size: 16),
-                    const SizedBox(width: 8),
+                    Icon(Icons.shield_rounded, color: AppColors.neonCrimson, size: 16),
+                    SizedBox(width: 8),
                     Text(
                       'FIREWALL HARD-BLOCK ACTIVE',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppColors.neonCrimson,
                         fontSize: 12,
                         fontWeight: FontWeight.w900,
@@ -90,61 +56,33 @@ class _HardBlockScreenState extends State<HardBlockScreen>
                 ),
               ),
 
-              // Center Visual & Cyber Shield Radar
+              // Center Visual: Animated Vector Radar Scanner (Thay thế hoàn toàn emoji)
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Stack(
                     alignment: Alignment.center,
                     children: [
-                      // Rotating Radar Aura
-                      RotationTransition(
-                        turns: _rotateController,
-                        child: Container(
-                          width: 140,
-                          height: 140,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: AppColors.neonCrimson.withValues(alpha: 0.25),
-                              width: 1.5,
-                              style: BorderStyle.solid,
+                      const CyberRadarWidget(size: 140, color: AppColors.neonCrimson),
+                      Container(
+                        width: 70,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: const Color(0xFF161926),
+                          border: Border.all(color: AppColors.neonCrimson, width: 2),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.neonCrimson.withValues(alpha: 0.5),
+                              blurRadius: 20,
                             ),
-                          ),
+                          ],
                         ),
-                      ),
-                      // Pulsing Core
-                      ScaleTransition(
-                        scale: _scaleAnimation,
-                        child: Container(
-                          width: 100,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: RadialGradient(
-                              colors: [
-                                AppColors.neonCrimson.withValues(alpha: 0.3),
-                                Colors.transparent,
-                              ],
-                            ),
-                            border: Border.all(
-                              color: AppColors.neonCrimson,
-                              width: 2,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.neonCrimson.withValues(alpha: 0.4),
-                                blurRadius: 32,
-                                spreadRadius: 4,
-                              ),
-                            ],
-                          ),
-                          child: const Center(
-                            child: Icon(
-                              Icons.lock_outline_rounded,
-                              color: Colors.white,
-                              size: 46,
-                            ),
+                        child: const Center(
+                          child: Icon(
+                            Icons.lock_rounded,
+                            color: Colors.white,
+                            size: 32,
                           ),
                         ),
                       ),
@@ -152,7 +90,7 @@ class _HardBlockScreenState extends State<HardBlockScreen>
                   ),
                   const SizedBox(height: 36),
                   Text(
-                    widget.appRule.appName.toUpperCase(),
+                    appRule.appName.toUpperCase(),
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 28,
@@ -191,7 +129,7 @@ class _HardBlockScreenState extends State<HardBlockScreen>
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ElevatedButton(
-                    onPressed: widget.onDismiss,
+                    onPressed: onDismiss,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF161926),
                       foregroundColor: Colors.white,

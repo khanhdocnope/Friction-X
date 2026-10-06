@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/widgets/energy_flame_widget.dart';
 
 class FocusStatsHeader extends StatefulWidget {
   final bool isFocusActive;
@@ -47,10 +48,10 @@ class _FocusStatsHeaderState extends State<FocusStatsHeader>
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           colors: [
-            const Color(0xFF131622),
-            const Color(0xFF0D0F17),
+            Color(0xFF131622),
+            Color(0xFF0D0F17),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -154,21 +155,21 @@ class _FocusStatsHeaderState extends State<FocusStatsHeader>
                 title: 'DOPAMINE CỨU ĐƯỢC',
                 value: '3.4h',
                 color: AppColors.cyberIndigo,
-                icon: Icons.bolt_rounded,
+                customIcon: const Icon(Icons.electric_bolt_rounded, color: AppColors.cyberIndigo, size: 16),
               ),
               Container(width: 1, height: 36, color: Colors.white10),
               _buildStatItem(
                 title: 'CÁM DỖ ĐÃ CHẶN',
                 value: '27 lần',
                 color: AppColors.neonCrimson,
-                icon: Icons.security_rounded,
+                customIcon: const Icon(Icons.security_rounded, color: AppColors.neonCrimson, size: 16),
               ),
               Container(width: 1, height: 36, color: Colors.white10),
               _buildStatItem(
                 title: 'STREAK TẬP TRUNG',
                 value: '4 ngày',
                 color: AppColors.toxicAmber,
-                icon: Icons.local_fire_department_rounded,
+                customIcon: const EnergyFlameWidget(size: 16, color: AppColors.toxicAmber),
               ),
             ],
           ),
@@ -181,18 +182,18 @@ class _FocusStatsHeaderState extends State<FocusStatsHeader>
     required String title,
     required String value,
     required Color color,
-    required IconData icon,
+    required Widget customIcon,
   }) {
     return Column(
       children: [
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, color: color, size: 14),
-            const SizedBox(width: 4),
+            customIcon,
+            const SizedBox(width: 6),
             Text(
               value,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.w900,
