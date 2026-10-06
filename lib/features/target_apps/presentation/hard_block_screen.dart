@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/cyber_radar_widget.dart';
+import '../../kickstart_bridge/presentation/two_minute_bridge_screen.dart';
 import '../../target_apps/domain/interception_rule.dart';
 
 class HardBlockScreen extends StatelessWidget {
@@ -123,32 +124,51 @@ class HardBlockScreen extends StatelessWidget {
                 ],
               ),
 
-              // Bottom Return Button
+              // Bottom Action Buttons (Chuyển sang Cây cầu 2 phút)
               Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ElevatedButton(
-                    onPressed: onDismiss,
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const TwoMinuteBridgeScreen(),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF161926),
+                      backgroundColor: AppColors.cyberIndigo,
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 18),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
-                        side: BorderSide(
-                          color: Colors.white.withValues(alpha: 0.15),
-                        ),
                       ),
-                      elevation: 0,
+                      elevation: 8,
+                      shadowColor: AppColors.cyberIndigo.withValues(alpha: 0.5),
                     ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.bolt_rounded, size: 20),
+                        SizedBox(width: 8),
+                        Text(
+                          'Bắt Đầu 2 Phút Không Áp Lực',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextButton(
+                    onPressed: onDismiss,
                     child: const Text(
-                      'Quay Lại Bàn Làm Việc',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 0.5,
-                      ),
+                      'Tắt cửa sổ và rời khỏi thiết bị',
+                      style: TextStyle(color: Colors.white54, fontSize: 13),
                     ),
                   ),
                 ],

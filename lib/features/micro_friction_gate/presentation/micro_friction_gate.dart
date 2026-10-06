@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../kickstart_bridge/presentation/two_minute_bridge_screen.dart';
 
 // ==========================================
 // 1. DATA: Philosophical Corpus Repository
@@ -470,6 +471,39 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
                 onChanged: _onTextChanged,
               ),
               const SizedBox(height: 14),
+
+              // Bridge Action Buttons
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const TwoMinuteBridgeScreen(),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.bolt_rounded, size: 18),
+                      label: const Text(
+                        'Làm Việc 2 Phút Thay Thế',
+                        style: TextStyle(fontWeight: FontWeight.w800, fontSize: 13),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.cyberIndigo.withValues(alpha: 0.25),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          side: const BorderSide(color: AppColors.cyberIndigo),
+                        ),
+                        elevation: 0,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
 
               // Surrender Button
               TextButton(
