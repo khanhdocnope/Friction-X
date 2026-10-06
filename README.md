@@ -19,6 +19,11 @@
   <img src="https://img.shields.io/badge/Version-1.0.0-EC4899?style=for-the-badge" alt="Version"/>
 </p>
 
+<p align="center">
+  <a href="README.md">🇬🇧 English</a> •
+  <a href="README_VI.md">🇻🇳 Tiếng Việt</a>
+</p>
+
 ---
 
 ## 🧠 The Core Philosophy: Friction & Degradation > Hard Blocking
