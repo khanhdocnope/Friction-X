@@ -35,6 +35,10 @@ jobs:
       - name: Re-generate Flutter Android project files
         run: flutter create . --project-name friction_x --platforms=android --org com.frictionx.app
 
+      - name: Force Upgrade Gradle Wrapper to 8.4
+        run: |
+          sed -i 's/gradle-.*-all.zip/gradle-8.4-all.zip/g' android/gradle/wrapper/gradle-wrapper.properties || true
+
       - name: Get dependencies
         run: flutter pub get
 
@@ -53,7 +57,7 @@ jobs:
   # ==========================================
   build-windows:
     name: Build Windows EXE
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
       - name: Checkout repository
