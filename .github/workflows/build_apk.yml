@@ -5,7 +5,7 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
-  workflow_dispatch: # Cho phép bấm nút chạy thủ công bất kỳ lúc nào
+  workflow_dispatch:
 
 jobs:
   # ==========================================
@@ -31,6 +31,9 @@ jobs:
           flutter-version: '3.22.x'
           channel: 'stable'
           cache: true
+
+      - name: Re-generate Flutter Android project files
+        run: flutter create . --platforms=android --org com.frictionx.app
 
       - name: Get dependencies
         run: flutter pub get
@@ -63,8 +66,10 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Enable Windows Desktop Support
-        run: flutter config --enable-windows-desktop
+      - name: Enable & Generate Windows Platform Support
+        run: |
+          flutter config --enable-windows-desktop
+          flutter create . --platforms=windows --org com.frictionx.app
 
       - name: Get dependencies
         run: flutter pub get
