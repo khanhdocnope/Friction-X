@@ -33,7 +33,7 @@ jobs:
           cache: true
 
       - name: Re-generate Flutter Android project files
-        run: flutter create . --platforms=android --org com.frictionx.app
+        run: flutter create . --project-name friction_x --platforms=android --org com.frictionx.app
 
       - name: Get dependencies
         run: flutter pub get
@@ -69,7 +69,7 @@ jobs:
       - name: Enable & Generate Windows Platform Support
         run: |
           flutter config --enable-windows-desktop
-          flutter create . --platforms=windows --org com.frictionx.app
+          flutter create . --project-name friction_x --platforms=windows --org com.frictionx.app
 
       - name: Get dependencies
         run: flutter pub get
