@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/widgets/glowing_card.dart';
+import 'package:friction_x/core/theme/app_colors.dart';
+import 'package:friction_x/core/widgets/glowing_card.dart';
 
 /// Màn hình Cây Cầu Bắt Đầu 2 Phút (The 2-Minute Kickstart Bridge)
 /// Ứng dụng nguyên lý tâm lý học: Giảm áp lực nhận thức xuống mức tối thiểu,
@@ -112,7 +112,7 @@ class _TwoMinuteBridgeScreenState extends State<TwoMinuteBridgeScreen>
                     Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: AppColors.cyberIndigo.withValues(alpha: 0.15),
+                        color: AppColors.cyberIndigo.withOpacity(0.15),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Icon(
@@ -176,7 +176,7 @@ class _TwoMinuteBridgeScreenState extends State<TwoMinuteBridgeScreen>
                   style: const TextStyle(color: Colors.white, fontSize: 16),
                   decoration: InputDecoration(
                     hintText: 'Nhập việc bạn định làm...',
-                    hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.3)),
+                    hintStyle: TextStyle(color: Colors.white.withOpacity(0.3)),
                     filled: true,
                     fillColor: const Color(0xFF141724),
                     border: OutlineInputBorder(
@@ -200,7 +200,7 @@ class _TwoMinuteBridgeScreenState extends State<TwoMinuteBridgeScreen>
                       borderRadius: BorderRadius.circular(16),
                     ),
                     elevation: 8,
-                    shadowColor: AppColors.cyberIndigo.withValues(alpha: 0.5),
+                    shadowColor: AppColors.cyberIndigo.withOpacity(0.5),
                   ),
                   child: const Text(
                     'Bấm Vào Đây & Làm Trong 2 Phút',
@@ -235,7 +235,7 @@ class _TwoMinuteBridgeScreenState extends State<TwoMinuteBridgeScreen>
                             child: CircularProgressIndicator(
                               value: _remainingSeconds / 120.0,
                               strokeWidth: 8,
-                              backgroundColor: Colors.white.withValues(alpha: 0.08),
+                              backgroundColor: Colors.white.withOpacity(0.08),
                               valueColor: const AlwaysStoppedAnimation<Color>(AppColors.neonCyan),
                             ),
                           ),
@@ -288,7 +288,7 @@ class _TwoMinuteBridgeScreenState extends State<TwoMinuteBridgeScreen>
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: AppColors.neonGreen.withValues(alpha: 0.15),
+                          color: AppColors.neonGreen.withOpacity(0.15),
                           border: Border.all(color: AppColors.neonGreen, width: 2),
                         ),
                         child: const Icon(

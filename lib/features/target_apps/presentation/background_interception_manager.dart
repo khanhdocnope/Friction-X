@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../../core/native_bridge/platform_native_bridge.dart';
-import '../data/app_rule_repository.dart';
-import '../domain/interception_router.dart';
-import '../presentation/hard_block_screen.dart';
-import '../../micro_friction_gate/presentation/micro_friction_gate.dart';
+import 'package:friction_x/core/native_bridge/platform_native_bridge.dart';
+import 'package:friction_x/features/target_apps/data/app_rule_repository.dart';
+import 'package:friction_x/features/target_apps/domain/interception_router.dart';
+import 'package:friction_x/features/target_apps/presentation/hard_block_screen.dart';
+import 'package:friction_x/features/micro_friction_gate/presentation/micro_friction_gate.dart';
 
 /// Service trung tâm chạy nền trên Flutter điều phối sự kiện mở App từ Native
 class BackgroundInterceptionManager {

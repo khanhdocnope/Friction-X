@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../kickstart_bridge/presentation/two_minute_bridge_screen.dart';
+import 'package:friction_x/core/theme/app_colors.dart';
+import 'package:friction_x/features/kickstart_bridge/presentation/two_minute_bridge_screen.dart';
 
 // ==========================================
 // 1. DATA: Philosophical Corpus Repository
@@ -271,12 +271,12 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
                     decoration: BoxDecoration(
-                      color: AppColors.neonCrimson.withValues(alpha: 0.15),
+                      color: AppColors.neonCrimson.withOpacity(0.15),
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: AppColors.neonCrimson.withValues(alpha: 0.4)),
+                      border: Border.all(color: AppColors.neonCrimson.withOpacity(0.4)),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.neonCrimson.withValues(alpha: 0.1),
+                          color: AppColors.neonCrimson.withOpacity(0.1),
                           blurRadius: 10,
                         ),
                       ],
@@ -325,7 +325,7 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
               Text(
                 'Tự tay gõ đúng từng từ để mở app. Gõ sai từ nào sẽ bị xóa bắt gõ lại từ đó. Cấm copy-paste.',
                 style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.5),
+                  color: Colors.white.withOpacity(0.5),
                   fontSize: 13,
                   height: 1.4,
                 ),
@@ -338,7 +338,7 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
                   Container(
                     height: 8,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.06),
+                      color: Colors.white.withOpacity(0.06),
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -353,7 +353,7 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
                       borderRadius: BorderRadius.circular(4),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.cyberIndigo.withValues(alpha: 0.6),
+                          color: AppColors.cyberIndigo.withOpacity(0.6),
                           blurRadius: 10,
                           spreadRadius: 1,
                         ),
@@ -375,13 +375,13 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
                     border: Border.all(
                       color: _showShakeAnimation
                           ? AppColors.neonCrimson
-                          : Colors.white.withValues(alpha: 0.08),
+                          : Colors.white.withOpacity(0.08),
                       width: _showShakeAnimation ? 2 : 1.2,
                     ),
                     boxShadow: _showShakeAnimation
                         ? [
                             BoxShadow(
-                              color: AppColors.neonCrimson.withValues(alpha: 0.3),
+                              color: AppColors.neonCrimson.withOpacity(0.3),
                               blurRadius: 20,
                             ),
                           ]
@@ -400,7 +400,7 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
                           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                           decoration: BoxDecoration(
                             color: isCurrent
-                                ? AppColors.cyberIndigo.withValues(alpha: 0.25)
+                                ? AppColors.cyberIndigo.withOpacity(0.25)
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(6),
                             border: isCurrent
@@ -409,7 +409,7 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
                             boxShadow: isCurrent
                                 ? [
                                     BoxShadow(
-                                      color: AppColors.cyberIndigo.withValues(alpha: 0.3),
+                                      color: AppColors.cyberIndigo.withOpacity(0.3),
                                       blurRadius: 8,
                                     ),
                                   ]
@@ -422,10 +422,10 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
                               fontFamily: 'monospace',
                               fontWeight: isCurrent ? FontWeight.w800 : FontWeight.w500,
                               color: isPassed
-                                  ? Colors.white.withValues(alpha: 0.2)
+                                  ? Colors.white.withOpacity(0.2)
                                   : isCurrent
                                       ? Colors.white
-                                      : Colors.white.withValues(alpha: 0.75),
+                                      : Colors.white.withOpacity(0.75),
                             ),
                           ),
                         );
@@ -454,7 +454,7 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
                   fillColor: const Color(0xFF151824),
                   hintText: 'Gõ từ hiện tại và ấn phím cách...',
                   hintStyle: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.3),
+                    color: Colors.white.withOpacity(0.3),
                     fontSize: 14,
                     fontFamily: 'sans-serif',
                   ),
@@ -490,7 +490,7 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
                         style: TextStyle(fontWeight: FontWeight.w800, fontSize: 13),
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.cyberIndigo.withValues(alpha: 0.25),
+                        backgroundColor: AppColors.cyberIndigo.withOpacity(0.25),
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
@@ -511,7 +511,7 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
                 child: Text(
                   'Đóng Cửa Sổ & Tiếp Tục Làm Việc',
                   style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.45),
+                    color: Colors.white.withOpacity(0.45),
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
                   ),
@@ -528,9 +528,9 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withValues(alpha: 0.25)),
+        border: Border.all(color: color.withOpacity(0.25)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

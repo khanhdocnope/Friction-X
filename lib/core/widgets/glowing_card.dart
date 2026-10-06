@@ -23,13 +23,13 @@ class GlowingCard extends StatelessWidget {
         color: const Color(0xFF13151F),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: isGlowing ? glowColor.withValues(alpha: 0.35) : Colors.white.withValues(alpha: 0.06),
+          color: isGlowing ? glowColor.withOpacity(0.35) : Colors.white.withOpacity(0.06),
           width: 1.2,
         ),
         boxShadow: isGlowing
             ? [
                 BoxShadow(
-                  color: glowColor.withValues(alpha: 0.12),
+                  color: glowColor.withOpacity(0.12),
                   blurRadius: 18,
                   spreadRadius: 0,
                   offset: const Offset(0, 4),

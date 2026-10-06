@@ -65,7 +65,7 @@ class _RadarPainter extends CustomPainter {
 
     // Vòng tròn lưới
     final circlePaint = Paint()
-      ..color = color.withValues(alpha: 0.2)
+      ..color = color.withOpacity(0.2)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
 
@@ -75,7 +75,7 @@ class _RadarPainter extends CustomPainter {
 
     // Trục chữ thập
     final axisPaint = Paint()
-      ..color = color.withValues(alpha: 0.15)
+      ..color = color.withOpacity(0.15)
       ..strokeWidth = 1.0;
     canvas.drawLine(Offset(center.dx - radius, center.dy), Offset(center.dx + radius, center.dy), axisPaint);
     canvas.drawLine(Offset(center.dx, center.dy - radius), Offset(center.dx, center.dy + radius), axisPaint);
@@ -86,8 +86,8 @@ class _RadarPainter extends CustomPainter {
         startAngle: 0.0,
         endAngle: pi / 2,
         colors: [
-          color.withValues(alpha: 0.0),
-          color.withValues(alpha: 0.4),
+          color.withOpacity(0.0),
+          color.withOpacity(0.4),
         ],
         transform: GradientRotation(angle),
       ).createShader(Rect.fromCircle(center: center, radius: radius));

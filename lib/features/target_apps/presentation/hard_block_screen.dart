@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/widgets/cyber_radar_widget.dart';
-import '../../kickstart_bridge/presentation/two_minute_bridge_screen.dart';
-import '../../target_apps/domain/interception_rule.dart';
+import 'package:friction_x/core/theme/app_colors.dart';
+import 'package:friction_x/core/widgets/cyber_radar_widget.dart';
+import 'package:friction_x/features/kickstart_bridge/presentation/two_minute_bridge_screen.dart';
+import 'package:friction_x/features/target_apps/domain/interception_rule.dart';
 
 class HardBlockScreen extends StatelessWidget {
   final TargetAppRule appRule;
@@ -29,12 +29,12 @@ class HardBlockScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
-                  color: AppColors.neonCrimson.withValues(alpha: 0.15),
+                  color: AppColors.neonCrimson.withOpacity(0.15),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: AppColors.neonCrimson.withValues(alpha: 0.5)),
+                  border: Border.all(color: AppColors.neonCrimson.withOpacity(0.5)),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.neonCrimson.withValues(alpha: 0.2),
+                      color: AppColors.neonCrimson.withOpacity(0.2),
                       blurRadius: 16,
                     ),
                   ],
@@ -74,7 +74,7 @@ class HardBlockScreen extends StatelessWidget {
                           border: Border.all(color: AppColors.neonCrimson, width: 2),
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.neonCrimson.withValues(alpha: 0.5),
+                              color: AppColors.neonCrimson.withOpacity(0.5),
                               blurRadius: 20,
                             ),
                           ],
@@ -115,7 +115,7 @@ class HardBlockScreen extends StatelessWidget {
                       'Ứng dụng này đang được bảo vệ bởi bức tường lửa Focus. Hãy hít một hơi sâu và quay về nhiệm vụ chính.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.5),
+                        color: Colors.white.withOpacity(0.5),
                         fontSize: 13,
                         height: 1.5,
                       ),
@@ -145,7 +145,7 @@ class HardBlockScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                       ),
                       elevation: 8,
-                      shadowColor: AppColors.cyberIndigo.withValues(alpha: 0.5),
+                      shadowColor: AppColors.cyberIndigo.withOpacity(0.5),
                     ),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,

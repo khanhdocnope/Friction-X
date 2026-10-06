@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/widgets/energy_flame_widget.dart';
+import 'package:friction_x/core/theme/app_colors.dart';
+import 'package:friction_x/core/widgets/energy_flame_widget.dart';
 
 class FocusStatsHeader extends StatefulWidget {
   final bool isFocusActive;
@@ -58,12 +58,12 @@ class _FocusStatsHeaderState extends State<FocusStatsHeader>
         ),
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: activeColor.withValues(alpha: 0.3),
+          color: activeColor.withOpacity(0.3),
           width: 1.2,
         ),
         boxShadow: [
           BoxShadow(
-            color: activeColor.withValues(alpha: 0.1),
+            color: activeColor.withOpacity(0.1),
             blurRadius: 24,
             spreadRadius: 2,
           ),
@@ -86,7 +86,7 @@ class _FocusStatsHeaderState extends State<FocusStatsHeader>
                         color: activeColor,
                         boxShadow: [
                           BoxShadow(
-                            color: activeColor.withValues(alpha: 0.8),
+                            color: activeColor.withOpacity(0.8),
                             blurRadius: 10,
                             spreadRadius: 3,
                           ),
@@ -112,7 +112,7 @@ class _FocusStatsHeaderState extends State<FocusStatsHeader>
                             ? 'Friction & Degradation active'
                             : 'Protection disabled',
                         style: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.5),
+                          color: Colors.white.withOpacity(0.5),
                           fontSize: 11,
                         ),
                       ),
@@ -127,9 +127,9 @@ class _FocusStatsHeaderState extends State<FocusStatsHeader>
                   duration: const Duration(milliseconds: 300),
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: activeColor.withValues(alpha: 0.15),
+                    color: activeColor.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: activeColor.withValues(alpha: 0.5)),
+                    border: Border.all(color: activeColor.withOpacity(0.5)),
                   ),
                   child: Text(
                     widget.isFocusActive ? 'TẮT FOCUS' : 'BẬT FOCUS',
@@ -206,7 +206,7 @@ class _FocusStatsHeaderState extends State<FocusStatsHeader>
         Text(
           title,
           style: TextStyle(
-            color: Colors.white.withValues(alpha: 0.4),
+            color: Colors.white.withOpacity(0.4),
             fontSize: 10,
             fontWeight: FontWeight.w600,
             letterSpacing: 0.5,

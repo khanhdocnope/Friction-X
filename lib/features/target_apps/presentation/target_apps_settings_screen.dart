@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../core/theme/app_colors.dart';
-import '../../core/widgets/glowing_card.dart';
-import '../../dashboard/presentation/widgets/focus_stats_header.dart';
-import '../domain/interception_rule.dart';
-import 'target_apps_controller.dart';
+import 'package:friction_x/core/theme/app_colors.dart';
+import 'package:friction_x/core/widgets/glowing_card.dart';
+import 'package:friction_x/features/dashboard/presentation/widgets/focus_stats_header.dart';
+import 'package:friction_x/features/target_apps/domain/interception_rule.dart';
+import 'package:friction_x/features/target_apps/presentation/target_apps_controller.dart';
 
 class TargetAppsSettingsScreen extends StatefulWidget {
   const TargetAppsSettingsScreen({super.key});
@@ -210,7 +210,7 @@ class _TargetAppsSettingsScreenState extends State<TargetAppsSettingsScreen> {
                         borderRadius: BorderRadius.circular(16),
                       ),
                       elevation: 8,
-                      shadowColor: AppColors.cyberIndigo.withValues(alpha: 0.5),
+                      shadowColor: AppColors.cyberIndigo.withOpacity(0.5),
                     ),
                     child: const Text(
                       'Thêm Vào Danh Sách Kiểm Soát',
@@ -264,7 +264,7 @@ class _TargetAppsSettingsScreenState extends State<TargetAppsSettingsScreen> {
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? color.withValues(alpha: 0.15)
+                            ? color.withOpacity(0.15)
                             : const Color(0xFF161926),
                         borderRadius: BorderRadius.circular(14),
                         border: Border.all(
@@ -314,9 +314,9 @@ class _TargetAppsSettingsScreenState extends State<TargetAppsSettingsScreen> {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: AppColors.cyberIndigo.withValues(alpha: 0.2),
+                color: AppColors.cyberIndigo.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.cyberIndigo.withValues(alpha: 0.4)),
+                border: Border.all(color: AppColors.cyberIndigo.withOpacity(0.4)),
               ),
               child: const Icon(Icons.shield_outlined, color: AppColors.cyberIndigo, size: 20),
             ),
@@ -394,7 +394,7 @@ class _TargetAppsSettingsScreenState extends State<TargetAppsSettingsScreen> {
                             padding: const EdgeInsets.only(right: 20),
                             margin: const EdgeInsets.only(bottom: 12),
                             decoration: BoxDecoration(
-                              color: AppColors.neonCrimson.withValues(alpha: 0.2),
+                              color: AppColors.neonCrimson.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: const Icon(Icons.delete_outline, color: AppColors.neonCrimson),
@@ -413,7 +413,7 @@ class _TargetAppsSettingsScreenState extends State<TargetAppsSettingsScreen> {
                                       Container(
                                         padding: const EdgeInsets.all(12),
                                         decoration: BoxDecoration(
-                                          color: strategyColor.withValues(alpha: 0.15),
+                                          color: strategyColor.withOpacity(0.15),
                                           borderRadius: BorderRadius.circular(14),
                                         ),
                                         child: Icon(
@@ -439,7 +439,7 @@ class _TargetAppsSettingsScreenState extends State<TargetAppsSettingsScreen> {
                                             Text(
                                               rule.packageNameOrProcess,
                                               style: TextStyle(
-                                                color: Colors.white.withValues(alpha: 0.4),
+                                                color: Colors.white.withOpacity(0.4),
                                                 fontSize: 12,
                                                 fontFamily: 'monospace',
                                               ),
@@ -470,10 +470,10 @@ class _TargetAppsSettingsScreenState extends State<TargetAppsSettingsScreen> {
                                             vertical: 6,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: strategyColor.withValues(alpha: 0.12),
+                                            color: strategyColor.withOpacity(0.12),
                                             borderRadius: BorderRadius.circular(10),
                                             border: Border.all(
-                                              color: strategyColor.withValues(alpha: 0.4),
+                                              color: strategyColor.withOpacity(0.4),
                                             ),
                                           ),
                                           child: Row(
@@ -500,7 +500,7 @@ class _TargetAppsSettingsScreenState extends State<TargetAppsSettingsScreen> {
                                       Text(
                                         'Vé tạm: ${rule.temporaryPassDurationMinutes}m',
                                         style: TextStyle(
-                                          color: Colors.white.withValues(alpha: 0.4),
+                                          color: Colors.white.withOpacity(0.4),
                                           fontSize: 12,
                                           fontFamily: 'monospace',
                                         ),
