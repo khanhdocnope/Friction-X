@@ -1,14 +1,17 @@
-name: Build Friction-X APK
+name: Build Friction-X (Android APK & Windows EXE)
 
 on:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
-  workflow_dispatch: # Cho phép bạn bấm nút Run thủ công trên GitHub
+  workflow_dispatch: # Cho phép bấm nút chạy thủ công bất kỳ lúc nào
 
 jobs:
-  build:
+  # ==========================================
+  # 1. BUILD ANDROID APK
+  # ==========================================
+  build-android:
     name: Build Android APK
     runs-on: ubuntu-latest
 
@@ -38,6 +41,44 @@ jobs:
       - name: Upload APK as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Friction-X-Release-APK
+          name: Friction-X-Android-APK
           path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 14
+
+  # ==========================================
+  # 2. BUILD WINDOWS DESKTOP (.EXE)
+  # ==========================================
+  build-windows:
+    name: Build Windows EXE
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.x'
+          channel: 'stable'
+          cache: true
+
+      - name: Enable Windows Desktop Support
+        run: flutter config --enable-windows-desktop
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Build Windows Executable (Release)
+        run: flutter build windows --release
+
+      - name: Compress Windows Build Directory
+        run: |
+          Compress-Archive -Path build\windows\x64\runner\Release\* -DestinationPath build\Friction-X-Windows-x64.zip
+
+      - name: Upload Windows ZIP Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Friction-X-Windows-EXE
+          path: build/Friction-X-Windows-x64.zip
           retention-days: 14

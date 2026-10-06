@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../../core/theme/app_colors.dart';
 
 // ==========================================
 // 1. DATA: Philosophical Corpus Repository
@@ -30,6 +31,7 @@ class TypingEngineState {
   final int currentWordIndex;
   final String currentWordInput;
   final int totalMistakes;
+  final int totalCharactersTyped;
   final bool isCompleted;
   final DateTime? startTime;
 
@@ -39,6 +41,7 @@ class TypingEngineState {
     this.currentWordIndex = 0,
     this.currentWordInput = '',
     this.totalMistakes = 0,
+    this.totalCharactersTyped = 0,
     this.isCompleted = false,
     this.startTime,
   });
@@ -50,6 +53,7 @@ class TypingEngineState {
       currentWordIndex: 0,
       currentWordInput: '',
       totalMistakes: 0,
+      totalCharactersTyped: 0,
       isCompleted: false,
     );
   }
@@ -58,6 +62,7 @@ class TypingEngineState {
     int? currentWordIndex,
     String? currentWordInput,
     int? totalMistakes,
+    int? totalCharactersTyped,
     bool? isCompleted,
     DateTime? startTime,
   }) {
@@ -67,6 +72,7 @@ class TypingEngineState {
       currentWordIndex: currentWordIndex ?? this.currentWordIndex,
       currentWordInput: currentWordInput ?? this.currentWordInput,
       totalMistakes: totalMistakes ?? this.totalMistakes,
+      totalCharactersTyped: totalCharactersTyped ?? this.totalCharactersTyped,
       isCompleted: isCompleted ?? this.isCompleted,
       startTime: startTime ?? this.startTime,
     );
@@ -76,11 +82,23 @@ class TypingEngineState {
     if (targetWords.isEmpty) return 0.0;
     return (currentWordIndex / targetWords.length).clamp(0.0, 1.0);
   }
+
+  int get currentWpm {
+    if (startTime == null || totalCharactersTyped == 0) return 0;
+    final minutes = DateTime.now().difference(startTime!).inSeconds / 60.0;
+    if (minutes <= 0.01) return 0;
+    final wordsTyped = (totalCharactersTyped / 5.0);
+    return (wordsTyped / minutes).round();
+  }
+
+  int get accuracyPercentage {
+    final totalAttempts = totalCharactersTyped + (totalMistakes * 5);
+    if (totalAttempts == 0) return 100;
+    return ((totalCharactersTyped / totalAttempts) * 100).round().clamp(0, 100);
+  }
 }
 
 class TypingEvaluator {
-  /// Evaluates input changes against the current active word.
-  /// Rule: Typing mistake resets the current word input back to empty.
   static ({TypingEngineState state, bool typoOccurred}) processInput({
     required TypingEngineState currentState,
     required String newInput,
@@ -92,7 +110,7 @@ class TypingEvaluator {
     final targetWord = currentState.targetWords[currentState.currentWordIndex];
     final startTime = currentState.startTime ?? DateTime.now();
 
-    // Check for paste attempt (difference in length > 1 char per frame)
+    // Check for paste attempt
     final isPasted = (newInput.length - currentState.currentWordInput.length) > 1;
     if (isPasted) {
       return (
@@ -105,19 +123,19 @@ class TypingEvaluator {
       );
     }
 
-    // Check if user finished the word (space pressed or matched last word)
+    // Check completed word
     final isLastWord = currentState.currentWordIndex == currentState.targetWords.length - 1;
-    
     if (newInput.endsWith(' ') || (isLastWord && newInput == targetWord)) {
       final trimmedInput = newInput.trim();
       if (trimmedInput == targetWord) {
         final nextWordIndex = currentState.currentWordIndex + 1;
         final isDone = nextWordIndex >= currentState.targetWords.length;
-        
+
         return (
           state: currentState.copyWith(
             currentWordIndex: nextWordIndex,
             currentWordInput: '',
+            totalCharactersTyped: currentState.totalCharactersTyped + targetWord.length + 1,
             isCompleted: isDone,
             startTime: startTime,
           ),
@@ -152,6 +170,7 @@ class TypingEvaluator {
     return (
       state: currentState.copyWith(
         currentWordInput: newInput,
+        totalCharactersTyped: currentState.totalCharactersTyped + (newInput.length > currentState.currentWordInput.length ? 1 : 0),
         startTime: startTime,
       ),
       typoOccurred: false,
@@ -160,7 +179,7 @@ class TypingEvaluator {
 }
 
 // ==========================================
-// 3. PRESENTATION: Micro-Friction Gate UI
+// 3. PRESENTATION: Micro-Friction Gate UI (Cyber-HUD)
 // ==========================================
 class MicroFrictionGateScreen extends StatefulWidget {
   final String targetAppName;
@@ -237,87 +256,135 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F0F12),
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Header Badge & Live HUD Stats
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
                     decoration: BoxDecoration(
-                      color: Colors.redAccent.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.redAccent.withValues(alpha: 0.3)),
+                      color: AppColors.neonCrimson.withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: AppColors.neonCrimson.withValues(alpha: 0.4)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.neonCrimson.withValues(alpha: 0.1),
+                          blurRadius: 10,
+                        ),
+                      ],
                     ),
-                    child: Text(
-                      'GATE ACTIVE: ${widget.targetAppName.toUpperCase()}',
-                      style: const TextStyle(
-                        color: Colors.redAccent,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 1.2,
-                      ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.bolt_rounded, color: AppColors.neonCrimson, size: 16),
+                        const SizedBox(width: 6),
+                        Text(
+                          'INTERCEPT: ${widget.targetAppName.toUpperCase()}',
+                          style: const TextStyle(
+                            color: AppColors.neonCrimson,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Text(
-                    'Mistakes: ${_state.totalMistakes}',
-                    style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.5),
-                      fontSize: 13,
-                      fontFamily: 'monospace',
-                    ),
+                  Row(
+                    children: [
+                      _buildLiveHudChip('WPM', '${_state.currentWpm}', AppColors.cyberIndigo),
+                      const SizedBox(width: 8),
+                      _buildLiveHudChip('ACC', '${_state.accuracyPercentage}%', AppColors.neonGreen),
+                      const SizedBox(width: 8),
+                      _buildLiveHudChip('TYPOS', '${_state.totalMistakes}', AppColors.neonCrimson),
+                    ],
                   ),
                 ],
               ),
               const SizedBox(height: 24),
+
+              // Title & Psychological Cooldown Banner
               const Text(
-                'Dopamine Intercept',
+                'Dopamine Friction Gate',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 26,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w900,
                   letterSpacing: -0.5,
                 ),
               ),
               const SizedBox(height: 6),
               Text(
-                'Type the philosophical reflection verbatim to pass. Any typo resets the word. Copy-paste is disabled.',
+                'Gõ chính xác từng từ để vượt qua cổng ma sát. Sai 1 ký tự sẽ reset từ đang gõ. Không cho phép Copy-Paste.',
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.5),
                   fontSize: 13,
                   height: 1.4,
                 ),
               ),
-              const SizedBox(height: 20),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: LinearProgressIndicator(
-                  value: _state.progressPercentage,
-                  minHeight: 6,
-                  backgroundColor: Colors.white.withValues(alpha: 0.08),
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    _state.progressPercentage == 1.0 ? Colors.greenAccent : const Color(0xFF6366F1),
+              const SizedBox(height: 18),
+
+              // Glowing Linear Progress Indicator
+              Stack(
+                children: [
+                  Container(
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.06),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
                   ),
-                ),
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 250),
+                    height: 8,
+                    width: MediaQuery.of(context).size.width * _state.progressPercentage,
+                    decoration: BoxDecoration(
+                      gradient: _state.progressPercentage == 1.0
+                          ? const LinearGradient(colors: [AppColors.neonGreen, Color(0xFF34D399)])
+                          : AppColors.primaryGradient,
+                      borderRadius: BorderRadius.circular(4),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.cyberIndigo.withValues(alpha: 0.6),
+                          blurRadius: 10,
+                          spreadRadius: 1,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
+
+              // Monospace Terminal Box with Live Word Diff
               Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(20),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  padding: const EdgeInsets.all(22),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF17171C),
-                    borderRadius: BorderRadius.circular(16),
+                    color: const Color(0xFF0F111A),
+                    borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: _showShakeAnimation
-                          ? Colors.redAccent
-                          : Colors.white.withValues(alpha: 0.07),
-                      width: _showShakeAnimation ? 2 : 1,
+                          ? AppColors.neonCrimson
+                          : Colors.white.withValues(alpha: 0.08),
+                      width: _showShakeAnimation ? 2 : 1.2,
                     ),
+                    boxShadow: _showShakeAnimation
+                        ? [
+                            BoxShadow(
+                              color: AppColors.neonCrimson.withValues(alpha: 0.3),
+                              blurRadius: 20,
+                            ),
+                          ]
+                        : [],
                   ),
                   child: SingleChildScrollView(
                     child: Wrap(
@@ -329,27 +396,35 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
                         final isCurrent = index == _state.currentWordIndex;
 
                         return Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                           decoration: BoxDecoration(
                             color: isCurrent
-                                ? const Color(0xFF6366F1).withValues(alpha: 0.25)
+                                ? AppColors.cyberIndigo.withValues(alpha: 0.25)
                                 : Colors.transparent,
-                            borderRadius: BorderRadius.circular(4),
+                            borderRadius: BorderRadius.circular(6),
                             border: isCurrent
-                                ? Border.all(color: const Color(0xFF6366F1), width: 1)
+                                ? Border.all(color: AppColors.cyberIndigo, width: 1.5)
                                 : null,
+                            boxShadow: isCurrent
+                                ? [
+                                    BoxShadow(
+                                      color: AppColors.cyberIndigo.withValues(alpha: 0.3),
+                                      blurRadius: 8,
+                                    ),
+                                  ]
+                                : [],
                           ),
                           child: Text(
                             word,
                             style: TextStyle(
                               fontSize: 17,
                               fontFamily: 'monospace',
-                              fontWeight: isCurrent ? FontWeight.w700 : FontWeight.w400,
+                              fontWeight: isCurrent ? FontWeight.w800 : FontWeight.w500,
                               color: isPassed
-                                  ? Colors.white.withValues(alpha: 0.25)
+                                  ? Colors.white.withValues(alpha: 0.2)
                                   : isCurrent
                                       ? Colors.white
-                                      : Colors.white.withValues(alpha: 0.7),
+                                      : Colors.white.withValues(alpha: 0.75),
                             ),
                           ),
                         );
@@ -358,7 +433,9 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 18),
+
+              // Protected Active Input Box
               TextField(
                 controller: _textController,
                 focusNode: _focusNode,
@@ -369,44 +446,80 @@ class _MicroFrictionGateScreenState extends State<MicroFrictionGateScreen>
                   color: Colors.white,
                   fontSize: 18,
                   fontFamily: 'monospace',
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                 ),
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: const Color(0xFF1E1E24),
-                  hintText: 'Type current word followed by space...',
+                  fillColor: const Color(0xFF151824),
+                  hintText: 'Gõ từ hiện tại và ấn phím cách...',
                   hintStyle: TextStyle(
                     color: Colors.white.withValues(alpha: 0.3),
                     fontSize: 14,
                     fontFamily: 'sans-serif',
                   ),
-                  prefixIcon: const Icon(Icons.keyboard_outlined, color: Color(0xFF6366F1)),
+                  prefixIcon: const Icon(Icons.terminal_rounded, color: AppColors.cyberIndigo),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide.none,
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Color(0xFF6366F1), width: 1.5),
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: const BorderSide(color: AppColors.cyberIndigo, width: 2),
                   ),
                 ),
                 onChanged: _onTextChanged,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 14),
+
+              // Surrender Button
               TextButton(
                 onPressed: () => Navigator.of(context).maybePop(),
                 child: Text(
-                  'Close & Return to Productive Work',
+                  'Đóng Cửa Sổ & Tiếp Tục Làm Việc',
                   style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.4),
+                    color: Colors.white.withValues(alpha: 0.45),
                     fontSize: 13,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildLiveHudChip(String label, String value, Color color) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withValues(alpha: 0.25)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              color: color,
+              fontSize: 10,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          const SizedBox(width: 4),
+          Text(
+            value,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 11,
+              fontFamily: 'monospace',
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ],
       ),
     );
   }
